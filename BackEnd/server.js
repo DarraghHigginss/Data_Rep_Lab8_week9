@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-const strConnection = 'mongodb+srv://admin:admin@cluster0.hrgmz.mongodb.net/MyFilms?retryWrites=true&w=majority';
+const strConnection = 'mongodb+srv://admin:stewie123@cluster0.umwin.mongodb.net/movies?retryWrites=true&w=majority';
 mongoose.connect(strConnection, {useNewUrlParser: true});
 
 const Schema = mongoose.Schema;
@@ -54,6 +54,15 @@ app.get('/api/movies/:id',(req, res)=>{
     movieModel.findById(req.params.id, (err,data)=>{
         res.json(data);
     })
+})
+
+app.put('/api/movies/:id', (req, res)=>{
+    console.log("Update movie:" + req.params.id);
+    console.log(req.body);
+    movieModel.findByIdAndUpdate(req.params.id,req.body, {new:true},
+        (err,data)=>{
+            res.send(data);
+        })
 })
 
 app.post('/api/movies', (req, res) => {
